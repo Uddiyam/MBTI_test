@@ -1,11 +1,7 @@
 .BtnOn{
     background-color:blue;
-}
-
-.Btn{
-    background-color: white;
-    color: black;
-    width: 70%;
+    color: white;
+    width: 80%;
     height: 45px;
     display: inline-block;
     padding: 5px 15px 5px 15px;
@@ -18,13 +14,36 @@
     font-weight: bolder;
 }
 
+.Btn{
+    background-color: white;
+    color: black;
+    width: 80%;
+    height: 45px;
+    display: inline-block;
+    padding: 5px 15px 5px 15px;
+    margin-top: 2.5%;
+    line-height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.Btn:hover{
+    background-color: white;
+    color: black;
+}
+
 .BtnWrap{
     margin-top: 1%;
     margin-bottom: 3%;
 }
 
 .Question{
-
+    margin-top: 10%;
+    font-weight: bold;
+    width: 100%;
 }
 
 .progress-bar{
@@ -34,4 +53,17 @@
 .Container{
     padding: 4%;
     text-align: center;
+}
+
+.BtnBox{
+    margin-top: 4%;
+    padding: 0 7% 0 7%;
+}
+
+.PrevBtn{
+   float: left;
+}
+
+.NextBtn{
+    float: right;
 }

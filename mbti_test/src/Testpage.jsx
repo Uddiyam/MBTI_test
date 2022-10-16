@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import Button from "react-bootstrap/Button";
 
 let now = 0;
 let count_progress = 0;
@@ -119,7 +120,7 @@ export default function Testpage() {
                 <Col sm={6}>
                   <div className={styles.Question}>{w.question}</div>
                   <div className={styles.BtnWrap}>
-                    <button
+                    <Button
                       className={
                         isclick_copy1[data_copy[j].number - 1]
                           ? styles.BtnOn
@@ -128,9 +129,8 @@ export default function Testpage() {
                       onClick={() => userAnswer1(j)}
                     >
                       {w.option1}
-                    </button>
-
-                    <button
+                    </Button>
+                    <Button
                       className={
                         isclick_copy2[data_copy[j].number - 1]
                           ? styles.BtnOn
@@ -139,7 +139,7 @@ export default function Testpage() {
                       onClick={() => userAnswer2(j)}
                     >
                       {w.option2}
-                    </button>
+                    </Button>
                   </div>
                 </Col>
               </>
@@ -147,20 +147,53 @@ export default function Testpage() {
           })}
         </Row>
       </Container>
-      <button
-        onClick={() => {
-          count > 1 && setCount(count - 1);
-        }}
-      >
-        이전
-      </button>
-      <button
-        onClick={() => {
-          count < 3 && setCount(count + 1);
-        }}
-      >
-        다음
-      </button>
+      <div className={styles.BtnBox}>
+        {count > 1 && (
+          <Button
+            className={styles.PrevBtn}
+            onClick={() => {
+              setCount(count - 1);
+            }}
+            variant="primary"
+            size="lg"
+          >
+            이전
+          </Button>
+        )}
+        {count == 1 && (
+          <Button
+            className={styles.PrevBtn}
+            variant="primary"
+            size="lg"
+            disabled
+          >
+            이전
+          </Button>
+        )}
+
+        {count < 3 && (
+          <Button
+            className={styles.NextBtn}
+            onClick={() => {
+              setCount(count + 1);
+            }}
+            variant="primary"
+            size="lg"
+          >
+            다음
+          </Button>
+        )}
+        {count == 3 && (
+          <Button
+            className={styles.NextBtn}
+            variant="primary"
+            size="lg"
+            disabled
+          >
+            다음
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
