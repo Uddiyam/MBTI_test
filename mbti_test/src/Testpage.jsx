@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import axios from "axios";
 
 let now = 0;
 let count_progress = 0;
@@ -43,6 +45,11 @@ export default function Testpage() {
   ]);
   const [answer, setAnswer] = useState([]);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   let isclick_copy1 = [...isclick1];
   let isclick_copy2 = [...isclick2];
 
@@ -60,7 +67,10 @@ export default function Testpage() {
 
   const userAnswer1 = (e) => {
     let answer_copy = [...answer, data[e].resOption1];
+    answer_copy.length = 12;
+    answer_copy[data_copy[e].number - 1] = data[e].resOption1;
     setAnswer(answer_copy);
+    console.log((answer_copy[data_copy[e].number - 1] = data[e].resOption1));
     isclick_copy1[data_copy[e].number - 1] =
       !isclick_copy1[data_copy[e].number - 1];
     setIsClick1(() => {
@@ -80,6 +90,8 @@ export default function Testpage() {
 
   const userAnswer2 = (e) => {
     let answer_copy = [...answer, data[e].resOption2];
+    answer_copy.length = 12;
+    answer_copy[data_copy[e].number - 1] = data[e].resOption2;
     setAnswer(answer_copy);
     isclick_copy2[data_copy[e].number - 1] =
       !isclick_copy2[data_copy[e].number - 1];
@@ -102,6 +114,13 @@ export default function Testpage() {
   const [count, setCount] = useState(1);
 
   let data_copy = [];
+  let aaa = [];
+
+  const sendData = async () => {
+    await axios.post("/api/result", { answer: answer }).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <div className={styles.Container}>
@@ -111,7 +130,6 @@ export default function Testpage() {
         count == 2 && q.number < 9 && q.number >= 5 && data_copy.push(q);
         count == 3 && q.number < 13 && q.number >= 9 && data_copy.push(q);
       })}
-
       <Container>
         <Row>
           {data_copy.map((w, j) => {
@@ -170,12 +188,23 @@ export default function Testpage() {
             이전
           </Button>
         )}
-
+        {console.log(answer)}
         {count < 3 && (
           <Button
             className={styles.NextBtn}
             onClick={() => {
-              setCount(count + 1);
+              {
+                aaa = [];
+                data.map((q, i) => {
+                  aaa.push(
+                    isclick1[data_copy[i].number - 1] ||
+                      isclick2[data_copy[i].number - 1]
+                  );
+                  console.log(aaa.includes(false), aaa);
+                  aaa.includes(false) ? setCount(count) : setCount(count + 1);
+                  aaa.includes(false) && handleShow();
+                });
+              }
             }}
             variant="primary"
             size="lg"
@@ -188,11 +217,26 @@ export default function Testpage() {
             className={styles.NextBtn}
             variant="primary"
             size="lg"
-            disabled
+            onClick={sendData}
           >
-            다음
+            검사완료
           </Button>
         )}
+
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
