@@ -68,9 +68,9 @@ export default function Testpage() {
   const userAnswer1 = (e) => {
     let answer_copy = [...answer, data[e].resOption1];
     answer_copy.length = 12;
-    answer_copy[data_copy[e].number - 1] = data[e].resOption1;
+    answer_copy[data_copy[e].number - 1] = data_copy[e].resOption1;
     setAnswer(answer_copy);
-    console.log((answer_copy[data_copy[e].number - 1] = data[e].resOption1));
+
     isclick_copy1[data_copy[e].number - 1] =
       !isclick_copy1[data_copy[e].number - 1];
     setIsClick1(() => {
@@ -91,7 +91,8 @@ export default function Testpage() {
   const userAnswer2 = (e) => {
     let answer_copy = [...answer, data[e].resOption2];
     answer_copy.length = 12;
-    answer_copy[data_copy[e].number - 1] = data[e].resOption2;
+
+    answer_copy[data_copy[e].number - 1] = data_copy[e].resOption2;
     setAnswer(answer_copy);
     isclick_copy2[data_copy[e].number - 1] =
       !isclick_copy2[data_copy[e].number - 1];
@@ -115,10 +116,11 @@ export default function Testpage() {
 
   let data_copy = [];
   let aaa = [];
-
+  const [result, setResult] = useState();
   const sendData = async () => {
     await axios.post("/api/result", { answer: answer }).then((res) => {
       console.log(res);
+      setResult(res.data.data);
     });
   };
 
@@ -200,7 +202,6 @@ export default function Testpage() {
                     isclick1[data_copy[i].number - 1] ||
                       isclick2[data_copy[i].number - 1]
                   );
-                  console.log(aaa.includes(false), aaa);
                   aaa.includes(false) ? setCount(count) : setCount(count + 1);
                   aaa.includes(false) && handleShow();
                 });
