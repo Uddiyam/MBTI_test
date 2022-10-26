@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -117,11 +117,14 @@ export default function Testpage() {
   let data_copy = [];
   let aaa = [];
   const [result, setResult] = useState();
+
   const sendData = async () => {
     await axios.post("/api/result", { answer: answer }).then((res) => {
       console.log(res);
       setResult(res.data.data);
     });
+
+    setCount(count + 1);
   };
 
   return (
@@ -191,50 +194,60 @@ export default function Testpage() {
           </Button>
         )}
         {console.log(answer)}
-        {count < 3 && (
+        {count <= 3 && (
           <Button
             className={styles.NextBtn}
-            onClick={() => {
-              {
-                aaa = [];
-                data.map((q, i) => {
-                  aaa.push(
-                    isclick1[data_copy[i].number - 1] ||
-                      isclick2[data_copy[i].number - 1]
-                  );
-                  aaa.includes(false) ? setCount(count) : setCount(count + 1);
-                  aaa.includes(false) && handleShow();
-                });
-              }
-            }}
+            onClick={
+              count === 3
+                ? () => {
+                    aaa = [];
+                    data.map((q, i) => {
+                      aaa.push(
+                        isclick1[data_copy[i].number - 1] ||
+                          isclick2[data_copy[i].number - 1]
+                      );
+                      aaa.includes(false) ? setCount(count) : sendData();
+                      aaa.includes(false) && handleShow();
+                    });
+                  }
+                : () => {
+                    aaa = [];
+                    data.map((q, i) => {
+                      aaa.push(
+                        isclick1[data_copy[i].number - 1] ||
+                          isclick2[data_copy[i].number - 1]
+                      );
+                      aaa.includes(false)
+                        ? setCount(count)
+                        : setCount(count + 1);
+                      aaa.includes(false) && handleShow();
+                      console.log(aaa);
+                    });
+                  }
+            }
             variant="primary"
             size="lg"
           >
-            다음
+            {count === 3 ? "검사완료" : "다음"}
           </Button>
         )}
-        {count == 3 && (
-          <Button
-            className={styles.NextBtn}
-            variant="primary"
-            size="lg"
-            onClick={sendData}
-          >
-            검사완료
-          </Button>
-        )}
+        {count === 4 &&
+          navigate("/Result", {
+            state: { result: result },
+          })}
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title style={{ color: "red" }}>
+              빠진 문항이 있습니다.
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body>
+            모든 문항에 대한 답을 선택해야 다음으로 넘어갈 수 있습니다.
+          </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
             <Button variant="primary" onClick={handleClose}>
-              Save Changes
+              확인
             </Button>
           </Modal.Footer>
         </Modal>

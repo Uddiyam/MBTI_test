@@ -1,0 +1,30 @@
+.Container{
+    padding: 20%;
+
+}
+
+.Btn{
+    width: 50%;
+    font-weight: bold;
+    font-size: large;
+}
+
+.ResWrap{
+    text-align: center;
+}
+
+.Text{
+    font-weight: bolder;
+    font-size: larger;
+    text-align: center;
+}
+
+.Link{
+    text-decoration: none;
+    color: white;
+}
+
+.Link:hover{
+    text-decoration: none;
+    color: white;
+}
