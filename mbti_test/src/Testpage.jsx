@@ -5,16 +5,16 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
-let now = 0;
-let count_progress = 0;
-
 export default function Testpage() {
+  const [now, setNow] = useState(0);
+  const [countProgress, setCountProgress] = useState(0);
+
   const [isclick1, setIsClick1] = useState([
     false,
     false,
@@ -52,17 +52,27 @@ export default function Testpage() {
 
   let isclick_copy1 = [...isclick1];
   let isclick_copy2 = [...isclick2];
+  const Minus = () => {
+    setNow(now - 100 / 12);
+    setCountProgress(countProgress - 1);
+  };
+  const Maintain = () => {
+    setNow(now);
+    setCountProgress(countProgress);
+  };
+
+  const Plus = () => {
+    setNow(now + 100 / 12);
+    setCountProgress(countProgress + 1);
+  };
 
   const AA = (e, i) => {
-    i[data_copy[e].number - 1]
-      ? (now = now) && (count_progress = count_progress)
-      : (now -= 100 / 12) && (count_progress -= 1);
+    i[data_copy[e].number - 1] ? Maintain() : Minus();
   };
 
   const BB = (e, i) => {
-    i[data_copy[e].number - 1]
-      ? (now += 100 / 12) && (count_progress += 1)
-      : (now -= 100 / 12) && (count_progress -= 1);
+    i[data_copy[e].number - 1] ? Plus() : Minus();
+    console.log(countProgress);
   };
 
   const userAnswer1 = (e) => {
@@ -129,7 +139,8 @@ export default function Testpage() {
 
   return (
     <div className={styles.Container}>
-      <ProgressBar now={now} label={`${count_progress}/12`} />
+      {console.log(countProgress)}
+      <ProgressBar now={now} label={`${countProgress}/12`} />
       {data.map((q, i) => {
         count == 1 && q.number < 5 && data_copy.push(q);
         count == 2 && q.number < 9 && q.number >= 5 && data_copy.push(q);

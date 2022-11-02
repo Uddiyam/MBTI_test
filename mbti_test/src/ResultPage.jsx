@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 export default function ResultPage() {
   const location = useLocation();
   const result = location.state.result;
+
   console.log(result);
   return (
     <div className={styles.Container}>
