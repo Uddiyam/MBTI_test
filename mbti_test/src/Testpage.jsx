@@ -213,10 +213,11 @@ export default function Testpage() {
                 ? () => {
                     aaa = [];
                     data.map((q, i) => {
-                      aaa.push(
-                        isclick1[data_copy[i].number - 1] ||
-                          isclick2[data_copy[i].number - 1]
-                      );
+                      data_copy[i] &&
+                        aaa.push(
+                          isclick1[data_copy[i].number - 1] ||
+                            isclick2[data_copy[i].number - 1]
+                        );
                       aaa.includes(false) ? setCount(count) : sendData();
                       aaa.includes(false) && handleShow();
                     });

@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.83644c50.css",
-    "main.js": "/static/js/main.ba765dd5.js",
-    "index.html": "/index.html",
-    "main.83644c50.css.map": "/static/css/main.83644c50.css.map",
-    "main.ba765dd5.js.map": "/static/js/main.ba765dd5.js.map"
+    "main.css": "/MBTI-Test/static/css/main.83644c50.css",
+    "main.js": "/MBTI-Test/static/js/main.5fb0f020.js",
+    "index.html": "/MBTI-Test/index.html",
+    "main.83644c50.css.map": "/MBTI-Test/static/css/main.83644c50.css.map",
+    "main.5fb0f020.js.map": "/MBTI-Test/static/js/main.5fb0f020.js.map"
   },
   "entrypoints": [
     "static/css/main.83644c50.css",
-    "static/js/main.ba765dd5.js"
+    "static/js/main.5fb0f020.js"
   ]
 }
